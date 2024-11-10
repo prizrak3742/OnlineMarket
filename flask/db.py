@@ -1,14 +1,3 @@
-######################################################################################################
-# ________           .__   .__                        _____                    __              __    #
-# \_____  \    ____  |  |  |__|  ____    ____        /     \  _____   _______ |  | __  ____  _/  |_  #
-#  /   |   \  /    \ |  |  |  | /    \ _/ __ \      /  \ /  \ \__  \  \_  __ \|  |/ /_/ __ \ \   __\ #
-# /    |    \|   |  \|  |__|  ||   |  \\  ___/     /    Y    \ / __ \_ |  | \/|    < \  ___/  |  |   #
-# \_______  /|___|  /|____/|__||___|  / \___  >    \____|__  /(____  / |__|   |__|_ \ \___  > |__|   #
-#         \/      \/                \/      \/             \/      \/              \/     \/         #
-#                                                                                                    #
-#                                    github: prizrak3742, Solochuk                                   #
-######################################################################################################
-
 import pymysql
 import pymysql.cursors
 from db_config import host, user, password, db_name
@@ -51,6 +40,7 @@ if __name__ == "__main__":
                     product_type_id INT NOT NULL,
                     description VARCHAR(1566) NOT NULL,
                     user_id INT NOT NULL,
+                    comments VARCHAR(1566) NOT NULL,
                     photo LONGBLOB
                 );
                 """
@@ -64,7 +54,19 @@ if __name__ == "__main__":
                     email VARCHAR(255) NOT NULL,
                     description VARCHAR(1566) NOT NULL,
                     number INT NOT NULL,
+                    auth BOOLEAN,
+                    host_ads VARCHAR(1566) NOT NULL,
                     photo LONGBLOB
+                );
+                """
+            )
+            cur.execute(
+                """
+                CREATE TABLE IF NOT EXISTS comments (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    comment VARCHAR(1566) NOT NULL,
+                    user_id INT NOT NULL,
+                    product_id INT NOT NULL
                 );
                 """
             )
