@@ -11,23 +11,55 @@
             margin: 0;
             background-color: #f8f9fa;
         }
+
         .content {
-            min-height: calc(100vh - 56px); /* Height of the screen minus the height of the navbar */
+            min-height: calc(100vh - 56px - 90px); /* Adjusted height to account for footer height */
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
+
         footer {
-            position: fixed;
+            position: relative;
             bottom: 0;
             left: 0;
             width: 100%;
+            background-color: #343a40;
+            padding: 20px 0;
+            text-align: center;
         }
+
         .registration-form {
             background: white;
             padding: 2rem;
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            margin: auto;
         }
+
         .form-label {
             font-weight: bold;
+        }
+
+        .btn-primary {
+            width: 100%;
+        }
+
+        .navbar-nav .nav-item .nav-link.active {
+            font-weight: bold;
+        }
+
+        /* Ensure footer text is not cramped */
+        footer p, footer a {
+            color: white;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -43,10 +75,10 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" href="/">Home</a>
+                    <a class="nav-link" href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/registration">Register</a>
+                    <a class="nav-link active" href="/registration">Register</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/login">Login</a>
@@ -62,42 +94,60 @@
     </div>
 </nav>
 
-<div class="container content my-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <h2 class="text-center mb-4">Registration</h2>
-            <div class="registration-form">
-                <form method="POST" action="/registration">
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="name" name="name" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="confirmPassword" class="form-label">Confirm Password</label>
-                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100">Register</button>
-                </form>
+<!-- Registration Form -->
+<div class="content">
+    <div class="registration-form">
+        <h2 class="text-center mb-4">Registration</h2>
+        <form action="/registration" method="post">
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" name="name" required>
             </div>
-        </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="mb-3">
+                <label for="phone" class="form-label">Phone Number</label>
+                <div class="input-group">
+                    <span class="input-group-text" id="country-code">+380</span>
+                    <input 
+                        type="tel" 
+                        class="form-control" 
+                        id="phone" 
+                        name="phone" 
+                        required 
+                        pattern="\d*" 
+                        inputmode="numeric" 
+                        placeholder="Enter your phone number (without country code)" 
+                        title="Phone number must be numeric and only digits." 
+                        aria-describedby="country-code">
+                </div>
+                <div class="invalid-feedback">
+                    Please enter a valid phone number containing only digits (without country code).
+                </div>
+            </div>
+            
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <div class="mb-3">
+                <label for="confirmPassword" class="form-label">Confirm Password</label>
+                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
     </div>
 </div>
 
 <!-- Footer -->
-<footer class="bg-dark text-white mt-4 pt-3 pb-3">
-    <div class="container text-center">
+<footer>
+    <div>
         <p>&copy; 2024 Online Market. All rights reserved.</p>
         <div>
-            <a href="#" class="text-white me-3">About Us</a>
-            <a href="#" class="text-white">Contact</a>
+            <a href="#">About Us</a>
+            <a href="#" class="ms-3">Contact</a>
         </div>
     </div>
 </footer>
