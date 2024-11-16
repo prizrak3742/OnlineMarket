@@ -12,7 +12,7 @@
             background-color: #f8f9fa;
         }
         .content {
-            min-height: calc(100vh - 56px); /* Height of screen minus height of navigation */
+            min-height: calc(100vh - 56px); /* Высота экрана минус высота навигации */
         }
         .ad-form {
             background: white;
@@ -24,7 +24,7 @@
 </head>
 <body>
 
-<!-- Navigation -->
+<!-- Навигация -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
         <a class="navbar-brand" href="#">Online Market</a>
@@ -53,22 +53,23 @@
     </div>
 </nav>
 
+<!-- Контент -->
 <div class="container content my-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <h2 class="text-center mb-4">Submit Ad</h2>
-            <form class="ad-form">
+            <form class="ad-form" method="POST" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label for="adTitle" class="form-label">Ad Title</label>
-                    <input type="text" class="form-control" id="adTitle" placeholder="Enter title" required>
+                    <input type="text" class="form-control" id="adTitle" name="adTitle" placeholder="Enter title" required>
                 </div>
                 <div class="mb-3">
                     <label for="adDescription" class="form-label">Description</label>
-                    <textarea class="form-control" id="adDescription" rows="3" placeholder="Enter description" required></textarea>
+                    <textarea class="form-control" id="adDescription" name="adDescription" rows="3" placeholder="Enter description" required></textarea>
                 </div>
                 <div class="mb-3">
                     <label for="adCategory" class="form-label">Category</label>
-                    <select class="form-select" id="adCategory" required>
+                    <select class="form-select" id="adCategory" name="adCategory" required>
                         <option value="">Select category</option>
                         <option value="vehicle">Transport</option>
                         <option value="food">Food</option>
@@ -86,11 +87,11 @@
                 </div>
                 <div class="mb-3">
                     <label for="adImage" class="form-label">Image</label>
-                    <input type="file" class="form-control" id="adImage" accept="image/*">
+                    <input type="file" class="form-control" id="adImage" name="adImage" accept="image/*">
                 </div>
                 <div class="mb-3">
                     <label for="adPrice" class="form-label">Price</label>
-                    <input type="number" class="form-control" id="adPrice" placeholder="Enter price" required>
+                    <input type="number" class="form-control" id="adPrice" name="adPrice" placeholder="Enter price" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Publish Ad</button>
             </form>

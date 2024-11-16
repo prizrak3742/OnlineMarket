@@ -20,7 +20,10 @@ from db import connection_db
 from db_config import db_name, user, password
 from function_db import DataBase
 from UserLogin import UserLogin
-
+from flask_mail import Mail, Message
+import random
+from PIL import Image
+from io import BytesIO
 ############ CONFIGURATION ############
 
 DEBUG = True
@@ -31,7 +34,14 @@ app.config.from_object(__name__)
 app.config['SECRET_KEY'] = SECRET_KEY
 app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{user}:{password}@localhost/{db_name}'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465 
+app.config['MAIL_USERNAME'] = 'goustg62@gmail.com'
+app.config['MAIL_PASSWORD'] = 'zlxy gfmc qjke cknb'
+app.config['MAIL_DEFAULT_SENDER'] = 'goustg62@gmail.com'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+mail = Mail(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 login_manager.login_message = "You need sign in to site for read this page!"
@@ -66,12 +76,41 @@ def products(type):
     
     return render_template("products.html", product_list=product_list, prod_type=product_type)
 
-@app.route("/product_<id>")
+@app.route("/product_<id>", methods=["GET", "POST"]) 
+@login_required
 def product(id):
     product_list = db.get_product_by_id(id)[0]
+    user_id = product_list["user_id"]
+    user = db.get_user_by_id(user_id)[0]
     product_type = db.get_type_by_id(product_list["product_type_id"])[0]["product_type"]
-    return render_template("product.html", title=product_list["title"], price=product_list["price"], description=product_list["description"], 
-                           user_id=product_list["user_id"], photo=product_list["photo"], catycogry=product_type)
+
+    id = product_list["id"]
+
+    image = Image.open(BytesIO(product_list["photo"]))
+    directory = f'static/img/{id}.jpg'
+    if not os.path.isfile(directory): 
+        image.save(directory)
+    
+    comments = db.get_comments(id)
+    
+    if request.method == "POST":
+        comment = request.form.get("comment")
+        if comment:
+            user_id = current_user.get_id()
+            db.add_comment(comment, id, user_id) 
+            return redirect(url_for('product', id=id))
+    
+    return render_template("product.html", 
+                           title=product_list["title"], 
+                           price=product_list["price"], 
+                           description=product_list["description"], 
+                           user_id=product_list["user_id"], 
+                           photo=directory, 
+                           catycogry=product_type, 
+                           comments=comments,
+                           name=user["name"],
+                           phone=user["number"])
+
 
 @app.route("/registration", methods=["POST", "GET"])
 def registration():
@@ -100,7 +139,7 @@ def registration():
 @app.route("/login", methods=["POST", "GET"])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('profile'))
+        return redirect(url_for('profile_'))
 
     if request.method == "POST":
         user = db.get_user_by_email(request.form['email'])
@@ -108,28 +147,80 @@ def login():
             userlogin = UserLogin().create(user)
             rm = True if request.form.get('remainme') else False
             login_user(userlogin, remember=rm)
-            return redirect(request.args.get("next") or url_for(f"profile"))
+            return redirect(request.args.get("next") or redirect(url_for("profile_")))
 
         flash("The password or login not correct", "error")
 
     return render_template("login.html")
 
-
-@app.route("/profile", methods=["POST", "GET"])
+@app.route("/profile/<id>", methods=["POST", "GET"])
 @login_required
-def profile():
+def profile(id):
     name = current_user.getName()
     email = current_user.getEmail()
     phone = current_user.getPhone()
-    return render_template("profile.html", name=name, email=email, phone=phone)
+    auth = bool(db.get_auth(email)[0]['auth'])
+    return render_template("profile.html", name=name, email=email, phone=phone, auth=auth)
+
+@app.route("/profile", methods=["POST", "GET"])
+@login_required
+def profile_():
+    id = current_user.get_id()
+    return redirect(url_for("profile", id=id))
+
+@app.route("/confirm_email", methods=["POST", "GET"])
+@login_required
+def confirm_email():
+
+    try:
+        email = current_user.getEmail()
+        auth = bool(db.get_auth(email)[0]['auth'])
+        code = random.randint(111111111, 999999999)
+        list = [code]
+        if not auth:
+            msg = Message('Event reminder', recipients=[email])
+            msg.body = 'Code | Online Market'
+            msg.html = str(code)
+            mail.send(msg)
+            if request.method == "POST":
+                confirmationCode = request.form.get("confirmationCode")
+                print("confirmationCode:", confirmationCode)
+                print("code: ", code)
+                if str(list[0]) == str(code):
+                    db.accept_auth(email)
+                    return redirect(url_for("profile_"))
+        else:
+            return redirect(url_for("profile_"))
+    
+    except Exception as e:
+        print(e)
+
+    return render_template("confirm_email.html")
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    flash("Success! You log out from account!", "success")
+    return redirect(url_for('login'))
 
 @app.route("/add_ad", methods=["POST", "GET"])
+@login_required
 def add_ad():
+    if request.method == "POST":
+        user_id = current_user.get_id()
+        title = request.form.get('adTitle') # з форм, яка має id 'adTitle'
+        description = request.form.get('adDescription')
+        category = db.get_id_by_type(request.form.get('adCategory'))[0]["id"]
+        print(category)
+        price = request.form.get('adPrice')
+        image = request.files.get('adImage')
+        image_data = image.read() if image else None
+        db.add_ad(user_id=user_id, title=title, description=description, category=category, price=price, image=image_data)
+    
     return render_template("add_ad.html")
 
 
-
-############ ROUTERS | ADMIN ############
 
 ############ RUN | RUN ############
 

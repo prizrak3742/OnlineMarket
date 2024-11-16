@@ -12,7 +12,7 @@
             background-color: #f8f9fa;
         }
         .content {
-            min-height: calc(100vh - 56px); /* Height of the screen minus the height of the navbar */
+            min-height: calc(100vh - 56px);
         }
         footer {
             position: relative;
@@ -64,12 +64,16 @@
         <div class="col-md-6">
             <h2 class="text-center mb-4">User Profile</h2>
             <div class="profile-card">
-                <h5>Name: <span id="userName">{{name}}</span></h5>
-                <h5>Email: <span id="userEmail">{{email}}</span></h5>
-                <h5>Phone: <span id="userPhone">+380 {{phone}}</span></h5>
+                <h5>Name: <span id="userName">{{ name }}</span></h5>
+                <h5>Email: <span id="userEmail">{{ email }}</span></h5>
+                <h5>Phone: <span id="userPhone">+380 {{ phone }}</span></h5>
                 <div class="mt-4">
-                    <a href="/edit_profile" class="btn btn-primary">Edit Profile</a>
-                    <a href="/my_ads" class="btn btn-secondary">My Ads</a>
+                    {% if auth %}
+                        <a href="/edit_profile" class="btn btn-primary">Edit Profile</a>
+                        <a href="/my_ads" class="btn btn-secondary">My Ads</a>
+                    {% else %}
+                        <a href="/confirm_email" class="btn btn-warning">Confirm Email</a>
+                    {% endif %}
                 </div>
             </div>
         </div>

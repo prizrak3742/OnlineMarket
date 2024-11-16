@@ -40,7 +40,6 @@ if __name__ == "__main__":
                     product_type_id INT NOT NULL,
                     description VARCHAR(1566) NOT NULL,
                     user_id INT NOT NULL,
-                    comments VARCHAR(1566) NOT NULL,
                     photo LONGBLOB
                 );
                 """
@@ -74,3 +73,4 @@ if __name__ == "__main__":
         print("Tables created successfully.")
     finally:
         conn.close()
+
