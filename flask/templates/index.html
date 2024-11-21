@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Market - Ads</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+        .content {
+            min-height: calc(100vh - 56px); /* Screen height minus navigation height */
+        }
+        footer {
+            position: relative;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="#">Online Market</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/registration">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/profile">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-success" href="/add_ad">Post an Ad</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Search -->
+<div class="container mt-4">
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Search ads..." aria-label="Search ads">
+        <button class="btn btn-primary" type="button">Search</button>
+    </div>
+</div>
+
+<!-- Categories -->
+<div class="container mt-4">
+    <h3>Categories</h3>
+    <div class="row text-center">
+        <!-- Iterating through each category -->
+        <div class="col-md-3 col-sm-6">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Transport</h5>
+                    <p class="card-text">Category: Vehicle</p>
+                    <a href="#" class="btn btn-primary">Go</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Food</h5>
+                    <p class="card-text">Category: Food</p>
+                    <a href="#" class="btn btn-primary">Go</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Children's Area</h5>
+                    <p class="card-text">Category: Children Area</p>
+                    <a href="#" class="btn btn-primary">Go</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Real Estate</h5>
+                    <p class="card-text">Category: Real Property</p>
+                    <a href="#" class="btn btn-primary">Go</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Jobs</h5>
+                    <p class="card-text">Category: Hire/Job</p>
+                    <a href="#" class="btn btn-primary">Go</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Animals</h5>
+                    <p class="card-text">Category: Animals</p>
+                    <a href="#" class="btn btn-primary">Go</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">For Home</h5>
+                    <p class="card-text">Category: For House</p>
+                    <a href="#" class="btn btn-primary">Go</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Business and Services</h5>
+                    <p class="card-text">Category: Business/Services</p>
+                    <a href="#" class="btn btn-primary">Go</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Rent</h5>
+                    <p class="card-text">Category: Rent</p>
+                    <a href="#" class="btn btn-primary">Go</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Fashion</h5>
+                    <p class="card-text">Category: Fashion</p>
+                    <a href="#" class="btn btn-primary">Go</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Hobby, Sports, Travel</h5>
+                    <p class="card-text">Category: Hobby/Sport/Travel</p>
+                    <a href="#" class="btn btn-primary">Go</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Trade</h5>
+                    <p class="card-text">Category: Trade</p>
+                    <a href="#" class="btn btn-primary">Go</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-dark text-white mt-4 pt-3 pb-3">
+    <div class="container text-center">
+        <p>&copy; 2024 Online Market. All rights reserved.</p>
+        <div>
+            <a href="#" class="text-white me-3">About Us</a>
+            <a href="#" class="text-white">Contact</a>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
